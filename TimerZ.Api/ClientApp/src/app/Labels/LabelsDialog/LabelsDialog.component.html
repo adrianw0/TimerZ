@@ -1,0 +1,11 @@
+<div class="cont" >
+  <div style="margin-bottom: 10px;">
+    <input
+      matInput
+      placeholder="New label name"
+      type="text"
+      [(ngModel)]="data.name"
+    />
+  </div>
+  <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Ok</button>
+</div>

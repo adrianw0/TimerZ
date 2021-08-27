@@ -1,0 +1,42 @@
+<div class="cont">
+  <div
+    style="display: flex; justify-content: space-between; margin-bottom: 20px"
+  >
+    <div>
+      <h3>Projects</h3>
+    </div>
+    <div>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="OpenProjectCreationDialog()"
+      >
+        New Project
+      </button>
+    </div>
+  </div>
+  <div>
+    <mat-table class="mat-elevation-z3" [dataSource]="projects">
+      <ng-container matColumnDef="name">
+        <mat-cell *matCellDef="let project">
+          {{ project.name }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="options">
+        <mat-cell class="col-button" *matCellDef="let project">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu>
+            <button mat-menu-item (click)="deleteRow(project.id)">
+              Delete
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-row *matRowDef="let entry; columns: columndefs"></mat-row>]
+    </mat-table>
+  </div>
+</div>

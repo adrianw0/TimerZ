@@ -1,0 +1,9 @@
+.cont{
+  padding: 30px 10px 0px 10px;
+  font-size: 14;
+}
+
+.col-button{
+  display: flex;
+  justify-content: flex-end;
+}

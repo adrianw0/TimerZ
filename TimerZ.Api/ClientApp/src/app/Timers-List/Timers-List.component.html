@@ -1,0 +1,96 @@
+<div class="cont">
+  <app-Stopwatch-Bar (newEntryEvent)="addTimer($event)"></app-Stopwatch-Bar>
+</div>
+
+<div class="cont" [hidden]="Data.data.length === 0">
+  <mat-table class="mat-elevation-z3" [dataSource]="Data">
+    <ng-container matColumnDef="description">
+      <mat-cell class="col-left col-wide-4" *matCellDef="let entry">{{
+        entry.description
+      }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+
+      <mat-cell class="col-center" *matCellDef="let entry">
+
+
+        {{ entry.startDate | date: "HH:mm:ss" }}
+
+      </mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="dash">
+      <mat-cell class="col-center" *matCellDef="let entry">- </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+      <mat-cell class="col-center" *matCellDef="let entry">
+        {{ entry.endDate | date: "HH:mm:ss" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="elapsed">
+      <mat-cell  class="col-center" *matCellDef="let entry"
+        >{{ entry.elapsed * 1000 | date: "HH:mm:ss":"UTC" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="project">
+      <mat-cell class="col-center" *matCellDef="let entry">  {{
+        entry.project? entry.project.name : ""
+      }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="labels">
+      <mat-cell class="col-left col-wide-2" *matCellDef="let entry">
+        <mat-chip-list>
+          <mat-chip *ngFor="let label of entry.labels">{{
+            label.name
+          }}</mat-chip>
+        </mat-chip-list>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="options">
+      <mat-cell class="col-button" *matCellDef="let entry">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu>
+          <button mat-menu-item (click)="deleteRow(entry.id)">Delete</button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Group header cells-->
+    <ng-container matColumnDef="groupHeader">
+      <td colspan="999" mat-cell *matCellDef="let group">
+        <h5>{{ group.groupName }}</h5>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="groupReducer">
+      <td colspan="1" mat-cell *matCellDef="let group">
+        <div fxFill fxLayoutAlign="center center"></div>
+      </td>
+    </ng-container>
+
+    <!-- Group line -->
+    <tr
+      mat-row
+      class="clickable"
+      *matRowDef="
+        let row;
+        columns: ['groupReducer', 'groupHeader'];
+        when: isGroup
+      "
+    ></tr>
+
+    <mat-row *matRowDef="let entry; columns: columndefs"></mat-row>
+  </mat-table>
+  <mat-paginator
+    [pageSizeOptions]="[10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

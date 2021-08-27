@@ -1,0 +1,40 @@
+<div class="cont">
+  <div
+    style="display: flex; justify-content: space-between; margin-bottom: 20px"
+  >
+    <div>
+      <h3>Labels</h3>
+    </div>
+    <div>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="OpenLabelCreationDialog()"
+      >
+        New Label
+      </button>
+    </div>
+  </div>
+  <div>
+    <mat-table class="mat-elevation-z3" [dataSource]="labels">
+      <ng-container matColumnDef="name">
+        <mat-cell *matCellDef="let label">
+          {{ label.name }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="options">
+        <mat-cell class="col-button" *matCellDef="let label">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu>
+            <button mat-menu-item (click)="deleteRow(label.id)">Delete</button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-row *matRowDef="let entry; columns: columndefs"></mat-row>
+    </mat-table>
+  </div>
+</div>

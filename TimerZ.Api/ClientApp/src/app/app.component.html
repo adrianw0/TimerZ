@@ -1,0 +1,43 @@
+<div class="page-container">
+  <header>
+    <mat-toolbar color="primary">
+      <div>
+        <button mat-button (click)="sidenav.toggle()">
+          <mat-icon>{{ isMenuOpen ? "menu_open" : "menu" }}</mat-icon>
+        </button>
+      </div>
+      <div>Nigga Nigga™</div>
+    </mat-toolbar>
+  </header>
+
+  <body>
+    <mat-sidenav-container>
+      <mat-sidenav
+        #sidenav
+        class="sidenav"
+        opened
+        mode="side"
+        autoFocus="false"
+        [(opened)]="isMenuOpen"
+      >
+        <mat-list>
+          <mat-nav-list>
+            <a
+              [routerLink]="page.link"
+              mat-list-item
+              *ngFor="let page of pages"
+            >
+              <mat-icon>{{ page.icon }}</mat-icon>
+              <mat-list-item>{{ page.name }}</mat-list-item>
+            </a>
+          </mat-nav-list>
+        </mat-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <main>
+          <router-outlet></router-outlet>
+        </main>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </body>
+</div>

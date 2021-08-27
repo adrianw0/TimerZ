@@ -1,0 +1,42 @@
+#container{
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+
+
+  align-items: center;
+  font-size: 14;
+}
+
+.example-chip-list {
+  width: 100%;
+}
+
+mat-form-field{
+  margin-bottom: -1.25em;
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+}
+
+div.mat-chip-list-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+mat-chip {
+  flex: 0 0 auto;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border: 6px solid transparent;
+  background-clip: content-box;
+  border-radius: 20px;
+}
+

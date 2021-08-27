@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerZ.Api", "TimerZ.Api\TimerZ.Api.csproj", "{7590615A-C693-45BD-8CC1-5535E9CD8E6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerZ.DAL", "TimerZ.DAL\TimerZ.DAL.csproj", "{F097328B-2888-4773-A4D5-F79521F2AE15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerZ.Domain", "TimerZ.Domain\TimerZ.Domain.csproj", "{4C6F1487-EA04-408F-BB0B-072C3BAB6380}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerZ.Repository", "TimerZ.Repository\TimerZ.Repository.csproj", "{1BEFFF80-75E4-41D9-8F03-EF80DD7A9FC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerZ.TimerTracking", "Timerz.TimerTracking\TimerZ.TimerTracking.csproj", "{9FFC9512-42CE-4712-BC32-9F2BF06D24FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7590615A-C693-45BD-8CC1-5535E9CD8E6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7590615A-C693-45BD-8CC1-5535E9CD8E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7590615A-C693-45BD-8CC1-5535E9CD8E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7590615A-C693-45BD-8CC1-5535E9CD8E6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F097328B-2888-4773-A4D5-F79521F2AE15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F097328B-2888-4773-A4D5-F79521F2AE15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F097328B-2888-4773-A4D5-F79521F2AE15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F097328B-2888-4773-A4D5-F79521F2AE15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C6F1487-EA04-408F-BB0B-072C3BAB6380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C6F1487-EA04-408F-BB0B-072C3BAB6380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C6F1487-EA04-408F-BB0B-072C3BAB6380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C6F1487-EA04-408F-BB0B-072C3BAB6380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BEFFF80-75E4-41D9-8F03-EF80DD7A9FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BEFFF80-75E4-41D9-8F03-EF80DD7A9FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BEFFF80-75E4-41D9-8F03-EF80DD7A9FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BEFFF80-75E4-41D9-8F03-EF80DD7A9FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FFC9512-42CE-4712-BC32-9F2BF06D24FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FFC9512-42CE-4712-BC32-9F2BF06D24FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FFC9512-42CE-4712-BC32-9F2BF06D24FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FFC9512-42CE-4712-BC32-9F2BF06D24FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BAF4AFA-77D4-4827-92C5-A7FE9757CB43}
+	EndGlobalSection
+EndGlobal
