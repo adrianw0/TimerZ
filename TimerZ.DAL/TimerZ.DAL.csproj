@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TimerZ.Common\TimerZ.Common.csproj" />
     <ProjectReference Include="..\TimerZ.Domain\TimerZ.Domain.csproj" />
   </ItemGroup>
 

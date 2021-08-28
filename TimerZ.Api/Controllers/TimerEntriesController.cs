@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimerZ.Api.Dtos;
+using TimerZ.Api.Extensions;
 using TimerZ.Api.Mapper;
 using TimerZ.Repository.Interfaces;
 
 namespace TimerZ.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api")]
     public class TimerEntriesController : ControllerBase
@@ -19,7 +22,7 @@ namespace TimerZ.Api.Controllers
         [HttpGet("Entries")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TimerEntryDTO))]
         public IActionResult GetEntries()
-        {
+        {           
             var entries = _timerEntryReadRepo.GetAllEntries();
 
             //TODO: move mapping to separate class
@@ -33,7 +36,7 @@ namespace TimerZ.Api.Controllers
         public IActionResult AddEntry([FromBody] TimerEntryDTO dtoEntry)
         {
             var entry = TimerEntryMapper.DtoToTimerEntry(dtoEntry);
-
+            entry.UserId = HttpContext.User.GetUserId();
             try
             {
                 var newEntry = _timerEntryWriteRepo.AddOrUpdateTimerEntry(entry);

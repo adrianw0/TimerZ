@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Options;
+using System;
+using TimerZ.Common;
 
 namespace TimerZ.DAL
 {
@@ -12,10 +14,16 @@ namespace TimerZ.DAL
             var optionsBuilder = new DbContextOptionsBuilder<TimerZDbContext>();
             optionsBuilder.UseSqlServer("Server=.;Database=TimersDb;Integrated Security=True");
 
-            return new TimerZDbContext(optionsBuilder.Options, new OperationalStoreOptionsMigrations());
+            return new TimerZDbContext(optionsBuilder.Options, new OperationalStoreOptionsMigrations(), new userProvider());
         }
     }
-
+    public class userProvider : IUserProvider
+    {
+        public Guid GetUserId()
+        {
+            return new Guid();
+        }
+    }
     public class OperationalStoreOptionsMigrations :
         IOptions<OperationalStoreOptions>
     {

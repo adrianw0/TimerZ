@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TimerZ.Common\TimerZ.Common.csproj" />
     <ProjectReference Include="..\TimerZ.DAL\TimerZ.DAL.csproj" />
     <ProjectReference Include="..\TimerZ.Domain\TimerZ.Domain.csproj" />
     <ProjectReference Include="..\TimerZ.Repository\TimerZ.Repository.csproj" />

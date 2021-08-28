@@ -1,10 +1,13 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TimerZ.Api.Extensions;
 using TimerZ.Domain.Models;
 using TimerZ.Repository.Interfaces;
 
 namespace TimerZ.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api")]
     public class ProjectsController : ControllerBase
@@ -23,6 +26,7 @@ namespace TimerZ.Api.Controllers
         [HttpPost("AddProject")]
         public IActionResult AddProject([FromBody] Project project)
         {
+            project.UserId = HttpContext.User.GetUserId();
             try
             {
                 _projectWriteRepo.AddNewProject(project);
@@ -53,7 +57,6 @@ namespace TimerZ.Api.Controllers
 
 
         public ProjectsController(IProjectsReadRepository projectsReadRepo,  IProjectsWriteRepository projectWriteRepo)
-
         {
             _projectsReadRepo = projectsReadRepo;
             _projectWriteRepo = projectWriteRepo;

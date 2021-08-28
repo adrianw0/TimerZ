@@ -53,10 +53,10 @@ import { MatListModule } from '@angular/material/list';
 
 
 const routes: Routes = [
-  { path: 'Timers', component: TimersListComponent },
-  { path: 'Projects', component: ProjectsComponent },
-  { path: 'Labels', component: LabelsComponent },
-  { path: '', component: TimersListComponent, pathMatch: 'full' }
+  { path: 'Timers', component: TimersListComponent, pathMatch: 'full', canActivate: [AuthorizeGuard] },
+  { path: 'Projects', component: ProjectsComponent, pathMatch: 'full', canActivate: [AuthorizeGuard]},
+  { path: 'Labels', component: LabelsComponent, pathMatch: 'full', canActivate: [AuthorizeGuard]  },
+  { path: '', component: HomeComponent, pathMatch: 'full' }
 
 ];
 

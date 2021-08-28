@@ -1,11 +1,15 @@
-﻿using System;
+﻿
+using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TimerZ.Api.Extensions;
 using TimerZ.Domain.Models;
 using TimerZ.Repository.Interfaces;
 
 namespace TimerZ.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api")]
     public class LabelsController : ControllerBase
@@ -24,6 +28,7 @@ namespace TimerZ.Api.Controllers
         [HttpPost("AddLabel")]
         public IActionResult AddLabel([FromBody] Label label)
         {
+            label.UserId = HttpContext.User.GetUserId();
             try
             {
                 _labelsWriteRepo.AddNewLabel(label);

@@ -11,6 +11,9 @@ namespace TimerZ.DAL.EntityConfigurations
             builder.ToTable("Labels", "Timers");
             builder.HasMany(l => l.TimerEntries)
                 .WithMany(te => te.Labels);
+            builder.HasOne(l => l.User)
+                .WithMany(u => u.Labels)
+                .HasForeignKey(l => l.UserId);
         }
     }
 }

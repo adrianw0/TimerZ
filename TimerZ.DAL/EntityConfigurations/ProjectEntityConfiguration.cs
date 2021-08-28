@@ -14,6 +14,9 @@ namespace TimerZ.DAL.EntityConfigurations
             builder.HasMany(p => p.TimerEntries)
                 .WithOne(te => te.Project)
                 .HasForeignKey(te => te.ProjectId);
+            builder.HasOne(p => p.User)
+                .WithMany(u => u.Projects)
+                .HasForeignKey(p => p.UserId);
         }
     }
 }

@@ -1,16 +1,18 @@
 <div class="page-container">
   <header>
-    <mat-toolbar color="primary">
-      <div>
-        <button mat-button (click)="sidenav.toggle()">
+    <mat-toolbar color="primary" style="justify-content: space-between;">
+      <div style="display: flex">
+        <button *ngIf="isAuthenticated | async" mat-button (click)="sidenav.toggle()">
           <mat-icon>{{ isMenuOpen ? "menu_open" : "menu" }}</mat-icon>
         </button>
+
+      <div>TimerZ</div>
       </div>
-      <div>Nigga Nigga™</div>
+      <app-login-menu></app-login-menu>
     </mat-toolbar>
   </header>
 
-  <body>
+  <body >
     <mat-sidenav-container>
       <mat-sidenav
         #sidenav

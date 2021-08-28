@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TimerZ.Common;
 using TimerZ.DAL;
 using TimerZ.Domain.Models;
 using TimerZ.Repository;
@@ -54,6 +55,8 @@ namespace TimerZ.Api
             services.AddTransient<IProjectsReadRepository, ProjectsRepository>();
             services.AddTransient<ITimerEntryWriteRepository, TimerEntryRepository>();
             services.AddTransient<ITimerEntryReadRepository, TimerEntryRepository>();
+
+            services.AddTransient<IUserProvider, IUserProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +86,7 @@ namespace TimerZ.Api
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

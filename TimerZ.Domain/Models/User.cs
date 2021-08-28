@@ -9,6 +9,8 @@ namespace TimerZ.Domain.Models
 {
     public class User : IdentityUser
     {
-        
+        public virtual ICollection<Label> Labels { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<TimerEntry> TimerEntries { get; set; }
     }
 }
