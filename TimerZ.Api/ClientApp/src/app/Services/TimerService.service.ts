@@ -19,7 +19,7 @@ constructor(private http: HttpClient, @Inject('BASE\_URL') private baseUrl: stri
  }
  DeleteTimerEntry(id: number) {
 
-  var req = this.http.delete("api/DeleteTimerEntry/"+id);
+  var req = this.http.delete(this.baseUrl + "api/DeleteTimerEntry/"+id);
   return req;
 
 }
@@ -30,7 +30,7 @@ constructor(private http: HttpClient, @Inject('BASE\_URL') private baseUrl: stri
      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
    }
 
-    var req = this.http.post<TimerEntry>("api/AddEntry", JSON.stringify(entry), httpOptions);
+    var req = this.http.post<TimerEntry>(this.baseUrl + "api/AddEntry", JSON.stringify(entry), httpOptions);
     console.log(req);
     return req;
  }

@@ -1,47 +1,39 @@
 ﻿using System;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimerZ.Api.Dtos;
 using TimerZ.Api.Extensions;
-using TimerZ.Api.Mapper;
-using TimerZ.Repository.Interfaces;
+using TimerZ.TimerTracking.Services.Interfaces;
 
 namespace TimerZ.Api.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("api")]
-    public class TimerEntriesController : ControllerBase
+    public class TimerEntriesController : Controller
     {
-        private readonly ITimerEntryReadRepository _timerEntryReadRepo;
-        private readonly ITimerEntryWriteRepository _timerEntryWriteRepo;
+
+        private readonly ITimeTrackingService _timeTrackingService;
 
 
         [HttpGet("Entries")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TimerEntryDTO))]
-        public IActionResult GetEntries()
-        {           
-            var entries = _timerEntryReadRepo.GetAllEntries();
-
-            //TODO: move mapping to separate class
-            var entriesDto = entries.Select(TimerEntryMapper.TimerEntryToDto).OrderByDescending(e=>e.StartDate);
-
-            return Ok(entriesDto);
-
+        public async Task<IActionResult> GetEntries()
+        {
+            return Ok(await _timeTrackingService.GetEntries()); //TODO: PAGING!!!
         }
 
         [HttpPost("AddEntry")]
-        public IActionResult AddEntry([FromBody] TimerEntryDTO dtoEntry)
+        public async Task<IActionResult> AddEntry([FromBody] TimerEntryDTO dtoEntry)
         {
-            var entry = TimerEntryMapper.DtoToTimerEntry(dtoEntry);
-            entry.UserId = HttpContext.User.GetUserId();
             try
             {
-                var newEntry = _timerEntryWriteRepo.AddOrUpdateTimerEntry(entry);
-                
-                return Created("", TimerEntryMapper.TimerEntryToDto(newEntry));
+                var userId = HttpContext.User.GetUserId();
+                var newEntry = await _timeTrackingService.AddEntry(dtoEntry, userId);
+
+                return Created(string.Empty, newEntry);
             }
             catch (Exception e)
             {
@@ -51,11 +43,11 @@ namespace TimerZ.Api.Controllers
         }
 
         [HttpGet("GetRunningEntry")]
-        public IActionResult GetRunningEntry()
+        public async Task<IActionResult> GetRunningEntry()
         {
             try
             {
-                return Ok(_timerEntryReadRepo.GetRunning());
+                return Ok(await _timeTrackingService.GetRunningEntry());
             }
             catch (Exception e)
             {
@@ -64,24 +56,23 @@ namespace TimerZ.Api.Controllers
         }
 
         [HttpDelete("DeleteTimerEntry/{id}")]
-        public IActionResult DeleteTimerEntry(int id)
+        public async Task<IActionResult> DeleteTimerEntry(int id)
         {
             try
             {
-                _timerEntryWriteRepo.DeleteTimerEntry(id);
+                await _timeTrackingService.DeleteTimerEntry(id);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                BadRequest(e.InnerException?.Message);
             }
             return Ok();
         }
 
-        public TimerEntriesController(ITimerEntryReadRepository timerEntryReadRepo, ITimerEntryWriteRepository timerEntryWriteRepo)
+        public TimerEntriesController( ITimeTrackingService timeTrackingService)
         {
-            _timerEntryReadRepo = timerEntryReadRepo;
-            _timerEntryWriteRepo = timerEntryWriteRepo;
+ 
+            _timeTrackingService = timeTrackingService;
         }
     }
 }

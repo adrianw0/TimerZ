@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace TimerZ.Domain.Models
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<Guid>
     {
         public virtual ICollection<Label> Labels { get; set; }
         public virtual ICollection<Project> Projects { get; set; }

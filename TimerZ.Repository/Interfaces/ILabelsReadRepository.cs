@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TimerZ.Domain.Models;
 
 namespace TimerZ.Repository.Interfaces
 {
     public interface ILabelsReadRepository
     {
-        IEnumerable<Label> GetAllLabels();
-        Label GetLabel(string name);
-        Label GetLabel(int id);
+        Task<IEnumerable<Label>> GetAllLabels();
+        Task<Label> GetLabel(string name);
+        Task<Label> GetLabel(int id);
     }
 }

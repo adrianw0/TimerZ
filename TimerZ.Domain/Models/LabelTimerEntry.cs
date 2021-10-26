@@ -2,10 +2,10 @@
 {
     public class LabelTimerEntry
     {
-        public int LabelsId { get; set; }
-        public Label Label { get; set; }
+        public int? LabelsId { get; set; }
+        public virtual Label Label { get; set; }
 
-        public int TimerEntriesId { get; set; }
-        public TimerEntry TimerEntry { get; set; }
+        public int? TimerEntriesId { get; set; }
+        public virtual TimerEntry TimerEntry { get; set; }
     }
 }

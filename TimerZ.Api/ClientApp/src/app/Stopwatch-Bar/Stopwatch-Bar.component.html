@@ -8,7 +8,7 @@
 
     <div style="flex-grow: 4;">
     <mat-form-field appearance="outline">
-      <input placeholder="What's up?" matInput [(ngModel)]="description" />
+      <input placeholder="What's up?" matInput [(ngModel)]="description" (input)="onDescriptionChanged($event.target.value)" />
     </mat-form-field>
     </div>
 

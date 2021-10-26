@@ -19,6 +19,10 @@ import { FormControl } from "@angular/forms";
 import { Project } from "../Shared/Models/Project";
 import { EventEmitter } from "@angular/core";
 import { map, startWith } from "rxjs/operators";
+import {Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+
+
 @Component({
   selector: "app-Stopwatch-Bar",
   templateUrl: "./Stopwatch-Bar.component.html",
@@ -31,16 +35,23 @@ export class StopwatchBarComponent implements OnInit, AfterContentInit {
 
   columndefs: string[] = ["description", "startTime", "endTime", "elapsed"];
 
+  descriptionChanged: Subject<string> = new Subject<string>();
+
   constructor( private _timersService: TimerService, private projectsService: ProjectsService ) {}
   ngAfterContentInit(): void {
 
-
-
-
-
-
-
   }
+
+
+  onDescriptionChanged(event: any) {
+    if (this.descriptionChanged.observers.length === 0) {
+        this.descriptionChanged.pipe(debounceTime(3000), distinctUntilChanged())
+            .subscribe(term => {
+                this.sendData();
+            });
+    }
+    this.descriptionChanged.next(event);
+}
 
 
 
@@ -59,7 +70,7 @@ export class StopwatchBarComponent implements OnInit, AfterContentInit {
 
           this.entry = runningTimer;
           this.isRunning = true;
-          this.entry.elapsed = Math.floor((new Date().getTime() - new Date(runningTimer.startDate).getTime()) / 1000);
+          this.entry.elapsed = Math.floor(this.entry.elapsed /1000);
         }
         );
 
@@ -104,7 +115,7 @@ export class StopwatchBarComponent implements OnInit, AfterContentInit {
 
   set description(value: string) {
     this.entry.description = value;
-    this.sendData()
+    // this.sendData()
   }
   get description() {
     return this.entry.description;
@@ -128,6 +139,7 @@ export class StopwatchBarComponent implements OnInit, AfterContentInit {
   public minutes: number;
   public hours: number;
   public TimeDisplay: string = "00:00:00";
+
 
 
   selectable = true;
@@ -172,6 +184,7 @@ export class StopwatchBarComponent implements OnInit, AfterContentInit {
       (label) =>
         label.name.toLowerCase() === event.option.viewValue.toLowerCase() &&
         !this.entry.labels.includes(label)
+
     );
     if (lbl) {
       this.entry.labels.push(lbl || lbl.name == "" ? lbl : null); //bruh

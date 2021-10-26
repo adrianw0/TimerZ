@@ -1,10 +1,11 @@
-﻿using TimerZ.Domain.Models;
+﻿using System.Threading.Tasks;
+using TimerZ.Domain.Models;
 
 namespace TimerZ.Repository.Interfaces
 {
     public interface IProjectsWriteRepository
     {
-        void AddNewProject(Project project);
-        void DeleteProject(int id);
+        Task AddNewProject(Project project);
+        Task DeleteProject(int id);
     }
 }

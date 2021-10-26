@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TimerZ.Domain\TimerZ.Domain.csproj" />
+    <ProjectReference Include="..\TimerZ.Repository\TimerZ.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
