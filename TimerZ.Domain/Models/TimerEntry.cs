@@ -17,16 +17,11 @@ namespace TimerZ.Domain.Models
         public virtual Project Project { get; set; }
         public virtual ICollection<Label> Labels { get; set; }
 
-        private TimerEntry()
+        public TimerEntry()
         {
             this.State = TimerState.New;
             this.Id = 0;
             Labels = new HashSet<Label>();
-        }
-
-        public static TimerEntry GetEmpty()
-        {
-            return new TimerEntry();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TimerZ.DAL;
 using TimerZ.Domain.Models;
@@ -15,29 +15,29 @@ namespace TimerZ.Repository
         {
             _context = context;
         }
-        public IEnumerable<Project> GetAllProjects()
+        public async Task<IEnumerable<Project>> GetAllProjects()
         {
-            return _context.Projects.AsNoTracking().ToList();
+            return await _context.Projects.AsNoTracking().ToListAsync();
         }
-        public Project GetProject(string name)
+        public async Task<Project> GetProject(string name)
         {
-            return _context.Projects.FirstOrDefault(p => p.Name == name);
+            return await _context.Projects.FirstOrDefaultAsync(p => p.Name == name);
         }
-        public Project GetProject(int id)
+        public async Task<Project> GetProject(int id)
         {
-            return _context.Projects.FirstOrDefault(p => p.Id == id);
+            return await _context.Projects.FirstOrDefaultAsync(p => p.Id == id);
         }
-        public void AddNewProject(Project project)
+        public async Task AddNewProject(Project project)
         {
             _context.Projects.Add(project);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteProject(int id)
+        public async Task DeleteProject(int id)
         {
-            var project = GetProject(id);
+            var project = await GetProject(id);
             _context.Projects.Remove(project);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

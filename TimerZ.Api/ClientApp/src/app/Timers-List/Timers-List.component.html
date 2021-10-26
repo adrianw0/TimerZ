@@ -22,18 +22,26 @@
     </ng-container>
 
     <ng-container matColumnDef="dash">
-      <mat-cell class="col-center" *matCellDef="let entry">- </mat-cell>
+      <mat-cell class="col-center" *matCellDef="let entry"> - </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="endDate">
       <mat-cell class="col-center" *matCellDef="let entry">
-        {{ entry.endDate | date: "HH:mm:ss" }}
+        {{ entry.endDate | date: "HH:mm:ss"}}
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="elapsed">
       <mat-cell  class="col-center" *matCellDef="let entry"
-        >{{ entry.elapsed * 1000 | date: "HH:mm:ss":"UTC" }}
+        >{{
+          ("0" + Math.floor((this.entry.elapsed / 1000) / 3600)).slice(-2)+
+          ":" +
+          ("0" + Math.floor((this.entry.elapsed / 1000) / 60)).slice(-2) +
+          ":" +
+          ("0" + Math.floor(this.entry.elapsed / 1000)).slice(-2)
+        }}
+
+
       </mat-cell>
     </ng-container>
 

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TimerZ.DAL;
 using TimerZ.Domain.Models;
 using TimerZ.Repository.Interfaces;
@@ -14,30 +16,30 @@ namespace TimerZ.Repository
         {
             _context = context;
         }
-        public IEnumerable<Label> GetAllLabels()
+        public async Task<IEnumerable<Label>> GetAllLabels()
         {
-            return _context.Labels.ToList();
+            return await _context.Labels.ToListAsync();
         }
-        public Label GetLabel(string name)
+        public async Task<Label> GetLabel(string name)
         {
 
-            return _context.Labels.FirstOrDefault(l => l.Name == name);
+            return await _context.Labels.FirstOrDefaultAsync(l => l.Name == name);
         }
-        public Label GetLabel(int id)
+        public async Task<Label> GetLabel(int id)
         {
-            return _context.Labels.FirstOrDefault(l => l.Id == id);
+            return await _context.Labels.FirstOrDefaultAsync(l => l.Id == id);
         }
-        public void AddNewLabel(Label label)
+        public async Task AddNewLabel(Label label)
         {
             _context.Labels.Add(label);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void DeleteLabel(int id)
+        public async Task DeleteLabel(int id)
         {
-            var label = GetLabel(id);
+            var label = await GetLabel(id);
             _context.Labels.Remove(label);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

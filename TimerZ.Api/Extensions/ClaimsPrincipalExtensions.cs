@@ -10,6 +10,7 @@ namespace TimerZ.Api.Extensions
     {
         public static Guid GetUserId(this ClaimsPrincipal principal)
         {
+            if (!principal.Claims.Any()) return Guid.Empty;
             return Guid.Parse(principal.FindFirstValue(ClaimTypes.NameIdentifier));
         }
 

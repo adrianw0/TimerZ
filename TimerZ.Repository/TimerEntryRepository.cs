@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TimerZ.DAL;
 using TimerZ.Domain.Enums;
@@ -16,29 +17,29 @@ namespace TimerZ.Repository
         {
             _context = context;
         }
-        public IEnumerable<TimerEntry> GetAllEntries()
+        public async Task<IEnumerable<TimerEntry>> GetAllEntries()
         {
-            return _context.TimerEntries
+            return await _context.TimerEntries
                 .AsNoTracking()
                 .Include(te=>te.Project)
                 .Include(te => te.Labels)
-                .ToList();
+                .ToListAsync();
         }
 
-        public TimerEntry GetRunning()
+        public async Task<TimerEntry> GetRunning()
         {
-            var result = _context.TimerEntries
+            var  result = await _context.TimerEntries
                 .Include(te=>te.Project)
                 .Include(te => te.Labels)
-                .FirstOrDefault(e => e.State == TimerState.Running && !e.EndDate.HasValue);
+                .FirstOrDefaultAsync(e => e.State == TimerState.Running && !e.EndDate.HasValue);
             return result;
         }
 
 
-        public TimerEntry AddOrUpdateTimerEntry(TimerEntry timer)
+        public async Task<TimerEntry> AddOrUpdateTimerEntry(TimerEntry timer)
         {
 
-            var _timer = _context.TimerEntries.Include(t => t.Labels).FirstOrDefault(t => t.Id == timer.Id);
+            var _timer = await _context.TimerEntries.Include(t => t.Labels).FirstOrDefaultAsync(t => t.Id == timer.Id);
 
             if (_timer == null)
             {
@@ -70,21 +71,21 @@ namespace TimerZ.Repository
 
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
-            return _context.TimerEntries
+            return await _context.TimerEntries
                 .AsNoTracking()
                 .Include(te => te.Project)
                 .Include(te => te.Labels)
-                .SingleOrDefault(t => t.Id == timer.Id);
+                .SingleOrDefaultAsync(t => t.Id == timer.Id);
         }
 
-        public void DeleteTimerEntry(int id)
+        public async Task DeleteTimerEntry(int id)
         {
             var timer = _context.TimerEntries.Find(id);
             _context.TimerEntries.Remove(timer);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

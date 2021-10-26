@@ -18,8 +18,6 @@ export class ProjectsService {
     return this.http.get<Project[]>(this.baseUrl + "api/Projects");
   }
   public addProject(project: Project) : Observable<Project> {
-
-
     var req = this.http.post<Project>(this.baseUrl +"api/AddProject", JSON.stringify(project), this.httpOptions);
     return req;
   }

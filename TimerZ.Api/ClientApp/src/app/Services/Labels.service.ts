@@ -10,17 +10,15 @@ export class LabelsService {
   constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string)
   {
   }
-
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  }
 
   public getLabels() : Observable<Label[]> {
     return this.http.get<Label[]>(this.baseUrl + "api/Labels");
   }
   public addLabel(label: Label) : Observable<Label> {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    }
-
-    var req = this.http.post<Label>("api/AddLabel", JSON.stringify(label), httpOptions);
+    var req = this.http.post<Label>(this.baseUrl +"api/AddLabel", JSON.stringify(label), this.httpOptions);
     return req;
   }
   deleteLabel(id: number) {

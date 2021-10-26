@@ -8,7 +8,7 @@ namespace TimerZ.DAL.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<LabelTimerEntry> builder)
         {
-
+            
         }
     }
 }

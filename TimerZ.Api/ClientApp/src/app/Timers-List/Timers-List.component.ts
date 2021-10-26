@@ -41,6 +41,8 @@ export class TimersListComponent implements OnInit, AfterViewInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
+  timezoneOffset = new Date().getTimezoneOffset();
+  Math = Math;
   Data: MatTableDataSource<TimerEntry>;
 
   form = new FormGroup({

@@ -1,51 +1,47 @@
-﻿
-using System;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimerZ.Api.Extensions;
 using TimerZ.Domain.Models;
-using TimerZ.Repository.Interfaces;
+using TimerZ.TimerTracking.Services.Interfaces;
 
 namespace TimerZ.Api.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("api")]
-    public class LabelsController : ControllerBase
+    public class LabelsController : Controller
     {
-        private readonly ILabelsReadRepository _labelsReadRepo;
-        private readonly ILabelsWriteRepository _labelsWriteRepo;
+        private readonly ILabelsService _labelsService;
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Label))]
+
         [HttpGet("Labels")]
-        public IActionResult GetLabels()
+        public async Task<IActionResult> GetLabels()
         {
-            var labels = _labelsReadRepo.GetAllLabels();
-            return Ok(labels);
+            return Ok( await _labelsService.GetLabels());
         }
 
         [HttpPost("AddLabel")]
-        public IActionResult AddLabel([FromBody] Label label)
+        public async Task<IActionResult> AddLabel([FromBody] Label label)
         {
-            label.UserId = HttpContext.User.GetUserId();
+            var  userId = HttpContext.User.GetUserId();
             try
             {
-                _labelsWriteRepo.AddNewLabel(label);
+                await _labelsService.AddLabel(label, userId);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest();
-
+                return BadRequest(e.InnerException?.Message?? e.Message);
             }
             return Created("", label);
         }
         [HttpDelete("DeleteLabel/{id}")]
-        public IActionResult DeleteLabel(int id)
+        public async Task<IActionResult> DeleteLabel(int id)
         {
             try
             {
-                _labelsWriteRepo.DeleteLabel(id);
+                await _labelsService.DeleteLabel(id);
             }
             catch (Exception)
             {
@@ -55,10 +51,9 @@ namespace TimerZ.Api.Controllers
         }
 
 
-        public LabelsController(ILabelsReadRepository labelsReadRepo,  ILabelsWriteRepository labelsWriteRepo)
+        public LabelsController(ILabelsService labelsService)
         {
-            _labelsReadRepo = labelsReadRepo;
-            _labelsWriteRepo = labelsWriteRepo;
+            _labelsService = labelsService;
         }
     }
 }

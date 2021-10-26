@@ -1,10 +1,11 @@
-﻿using TimerZ.Domain.Models;
+﻿using System.Threading.Tasks;
+using TimerZ.Domain.Models;
 
 namespace TimerZ.Repository.Interfaces
 {
     public interface ITimerEntryWriteRepository
     {
-        TimerEntry AddOrUpdateTimerEntry(TimerEntry timer);
-        void DeleteTimerEntry(int id);
+        Task<TimerEntry> AddOrUpdateTimerEntry(TimerEntry timer);
+        Task DeleteTimerEntry(int id);
     }
 }

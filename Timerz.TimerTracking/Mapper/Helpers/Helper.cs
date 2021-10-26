@@ -9,6 +9,6 @@ namespace TimerZ.Api.Mapper.Helpers
         {
             TimeSpan span = endTime - startTime;
             return (int) span.TotalMilliseconds;
-        }
+        } 
     }
 }
