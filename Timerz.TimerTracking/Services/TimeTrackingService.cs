@@ -30,12 +30,12 @@ namespace TimerZ.TimerTracking.Services
 
         }
 
-        public async Task<TimerEntryDTO> AddEntry(TimerEntryDTO dtoEntry, Guid userId)
+        public async Task<TimerEntryDTO> AddEntry(TimerEntryDTO dtoEntry, Guid userId, bool ignoreQueryFilters = false)
         {
             var entry = _timerEntryMapper.DtoToTimerEntry(dtoEntry);
             entry.UserId = userId;
-    
-            var newEntry = await _timerEntryWriteRepo.AddOrUpdateTimerEntry(entry);
+
+            var newEntry = await _timerEntryWriteRepo.AddOrUpdateTimerEntry(entry, false);
 
             return _timerEntryMapper.TimerEntryToDto(newEntry);
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TimerZ.Domain.Models;
 
@@ -18,6 +19,7 @@ namespace TimerZ.DAL.EntityConfigurations
             builder.HasOne(te => te.User)
                 .WithMany(u=>u.TimerEntries)
                 .HasForeignKey(te=>te.UserId);
+
 
 
         }

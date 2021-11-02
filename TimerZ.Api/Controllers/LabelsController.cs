@@ -25,7 +25,7 @@ namespace TimerZ.Api.Controllers
         [HttpPost("AddLabel")]
         public async Task<IActionResult> AddLabel([FromBody] Label label)
         {
-            var  userId = HttpContext.User.GetUserId();
+            var userId = HttpContext.User.GetUserId();
             try
             {
                 await _labelsService.AddLabel(label, userId);

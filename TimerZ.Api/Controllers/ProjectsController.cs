@@ -27,8 +27,7 @@ namespace TimerZ.Api.Controllers
         [HttpPost("AddProject")]
         public async Task<IActionResult> AddProject([FromBody] Project project)
         {
-
-             var userId = HttpContext.User.GetUserId();
+            var userId = HttpContext.User.GetUserId();
             try
             {
                 await _projectsService.AddProject(project, userId);

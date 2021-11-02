@@ -17,36 +17,41 @@ namespace TimerZ.Repository
         {
             _context = context;
         }
-        public async Task<IEnumerable<TimerEntry>> GetAllEntries()
+        public async Task<IEnumerable<TimerEntry>> GetAllEntries(bool ignoreQueryFilter = false)
         {
-            return await _context.TimerEntries
-                .AsNoTracking()
-                .Include(te=>te.Project)
-                .Include(te => te.Labels)
-                .ToListAsync();
+            var query = ignoreQueryFilter ? _context.TimerEntries.IgnoreQueryFilters() : _context.TimerEntries ;
+
+            query.AsNoTracking()
+                .Include(te => te.Project)
+                .Include(te => te.Labels);
+
+            return await query.ToListAsync();
         }
 
-        public async Task<TimerEntry> GetRunning()
+        public async Task<TimerEntry> GetRunning(bool ignoreQueryFilter = false)
         {
-            var  result = await _context.TimerEntries
-                .Include(te=>te.Project)
-                .Include(te => te.Labels)
-                .FirstOrDefaultAsync(e => e.State == TimerState.Running && !e.EndDate.HasValue);
+            var query = ignoreQueryFilter ? _context.TimerEntries.IgnoreQueryFilters() : _context.TimerEntries;
+
+            query.Include(te => te.Project)
+                 .Include(te => te.Labels);
+
+            var result = await query.FirstOrDefaultAsync(e => e.State == TimerState.Running && !e.EndDate.HasValue);
             return result;
         }
 
 
-        public async Task<TimerEntry> AddOrUpdateTimerEntry(TimerEntry timer)
+        public async Task<TimerEntry> AddOrUpdateTimerEntry(TimerEntry timer, bool ignoreQueryFilters = false)
         {
 
-            var _timer = await GetTimerById(timer.Id);
+            var _timer = await GetTimerById(timer.Id, ignoreQueryFilters);
 
             if (_timer == null) 
                 await AddTimer(timer);
             else 
-                await UpdateTimerEntry(timer, _timer);
+                await UpdateTimerEntry(timer, ignoreQueryFilters);
 
-            return await GetTimerById(timer.Id);
+            return await GetTimerById(timer.Id, ignoreQueryFilters);
+
         }
 
         public async Task DeleteTimerEntry(int id)
@@ -59,7 +64,7 @@ namespace TimerZ.Repository
 
         private async Task AddTimer(TimerEntry timer)
         {
-            var newTimer = _context.TimerEntries.Add(timer);
+            var newTimer = await _context.TimerEntries.AddAsync(timer);
 
             if (newTimer.Entity.Labels != null)
                 foreach (var label in newTimer.Entity.Labels)
@@ -68,18 +73,22 @@ namespace TimerZ.Repository
                 }
 
             await _context.SaveChangesAsync();
+
+
+
         }
 
-        private async Task UpdateTimerEntry(TimerEntry timer, TimerEntry existingTimer)
+        private async Task UpdateTimerEntry(TimerEntry timer, bool ignoreQueryFilters = false)
         {
-            _context.Entry(existingTimer).CurrentValues.SetValues(timer);
-            var _labels = existingTimer.Labels.ToList();
+            var _timer = await GetTimerById(timer.Id, ignoreQueryFilters);
+            _context.Entry(_timer).CurrentValues.SetValues(timer);
+            var _labels = _timer.Labels.ToList();
 
             foreach (var timerLabel in timer.Labels)
             {
                 if (_labels.All(l => l.Id != timerLabel.Id))
                 {
-                    existingTimer.Labels.Add(timerLabel);
+                    _timer.Labels.Add(timerLabel);
                 }
             }
 
@@ -87,19 +96,20 @@ namespace TimerZ.Repository
             {
                 if (timer.Labels.FirstOrDefault(l => l.Id == timerLabel.Id) == null)
                 {
-                    existingTimer.Labels.Remove(timerLabel);
+                    _timer.Labels.Remove(timerLabel);
                 }
             }
 
             await _context.SaveChangesAsync();
         }
-        private async Task<TimerEntry> GetTimerById(int id)
+        private async Task<TimerEntry> GetTimerById(int id, bool ignoreQueryFilters = false)
         {
-            return await _context.TimerEntries
-                .AsNoTracking()
-                .Include(te => te.Project)
-                .Include(te => te.Labels)
-                .SingleOrDefaultAsync(t => t.Id == id);
+            var query = ignoreQueryFilters ?  _context.TimerEntries.IgnoreQueryFilters() : _context.TimerEntries;
+
+            query.Include(te => te.Project)
+                .Include(te => te.Labels);
+
+            return await query.SingleOrDefaultAsync(t => t.Id == id);
         }
 
     }

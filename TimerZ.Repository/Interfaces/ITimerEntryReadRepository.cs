@@ -6,7 +6,7 @@ namespace TimerZ.Repository.Interfaces
 {
     public interface ITimerEntryReadRepository
     {
-        Task<IEnumerable<TimerEntry>> GetAllEntries();
-        Task<TimerEntry> GetRunning();
+        Task<IEnumerable<TimerEntry>> GetAllEntries(bool ignoreQueryFilter = false);
+        Task<TimerEntry> GetRunning(bool ignoreQueryFilters = false);
     }
 }

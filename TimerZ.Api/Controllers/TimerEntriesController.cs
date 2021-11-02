@@ -28,9 +28,9 @@ namespace TimerZ.Api.Controllers
         [HttpPost("AddEntry")]
         public async Task<IActionResult> AddEntry([FromBody] TimerEntryDTO dtoEntry)
         {
+            var userId = HttpContext.User.GetUserId();
             try
             {
-                var userId = HttpContext.User.GetUserId();
                 var newEntry = await _timeTrackingService.AddEntry(dtoEntry, userId);
 
                 return Created(string.Empty, newEntry);
