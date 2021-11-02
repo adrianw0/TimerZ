@@ -44,7 +44,7 @@ namespace TimerZ.Repository
             if (_timer == null) 
                 await AddTimer(timer);
             else 
-                await UpdateTimerEntry(timer, _timer);
+                await UpdateTimerEntry(timer);
 
             return await GetTimerById(timer.Id);
         }
@@ -59,7 +59,7 @@ namespace TimerZ.Repository
 
         private async Task AddTimer(TimerEntry timer)
         {
-            var newTimer = _context.TimerEntries.Add(timer);
+            var newTimer = await _context.TimerEntries.AddAsync(timer);
 
             if (newTimer.Entity.Labels != null)
                 foreach (var label in newTimer.Entity.Labels)
@@ -70,16 +70,17 @@ namespace TimerZ.Repository
             await _context.SaveChangesAsync();
         }
 
-        private async Task UpdateTimerEntry(TimerEntry timer, TimerEntry existingTimer)
+        private async Task UpdateTimerEntry(TimerEntry timer)
         {
-            _context.Entry(existingTimer).CurrentValues.SetValues(timer);
-            var _labels = existingTimer.Labels.ToList();
+            var _timer = await GetTimerById(timer.Id);
+            _context.Entry(_timer).CurrentValues.SetValues(timer);
+            var _labels = _timer.Labels.ToList();
 
             foreach (var timerLabel in timer.Labels)
             {
                 if (_labels.All(l => l.Id != timerLabel.Id))
                 {
-                    existingTimer.Labels.Add(timerLabel);
+                    _timer.Labels.Add(timerLabel);
                 }
             }
 
@@ -87,7 +88,7 @@ namespace TimerZ.Repository
             {
                 if (timer.Labels.FirstOrDefault(l => l.Id == timerLabel.Id) == null)
                 {
-                    existingTimer.Labels.Remove(timerLabel);
+                    _timer.Labels.Remove(timerLabel);
                 }
             }
 
@@ -96,7 +97,6 @@ namespace TimerZ.Repository
         private async Task<TimerEntry> GetTimerById(int id)
         {
             return await _context.TimerEntries
-                .AsNoTracking()
                 .Include(te => te.Project)
                 .Include(te => te.Labels)
                 .SingleOrDefaultAsync(t => t.Id == id);

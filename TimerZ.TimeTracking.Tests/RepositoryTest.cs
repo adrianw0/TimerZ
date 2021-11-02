@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Query;
+using MockQueryable.Moq;
 using Moq;
 using Moq.EntityFrameworkCore;
 using TimerZ.DAL;
@@ -27,7 +30,7 @@ namespace TimerZ.TimeTracking.Tests
             _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         }
 
-        private static TimerEntryRepository PrepareRepo(IEnumerable<TimerEntry> data)
+        private static TimerEntryRepository PrepareRepo(ICollection<TimerEntry> data)
         {
             
             var mockContext = new Mock<TimerZDbContext>(new DbContextOptionsBuilder().Options, null, null);
@@ -79,6 +82,33 @@ namespace TimerZ.TimeTracking.Tests
             Assert.Null(returned);
             
         }
+
+        [Fact]
+        public async Task GetAllEntries_ShouldReturnList_WhenAnyExists()
+        {
+            //Arrange
+            var data = _fixture.CreateMany<TimerEntry>().ToList();
+            var _sut = PrepareRepo(data);
+
+            //Act
+            var result = await _sut.GetAllEntries();
+
+            //Assert
+            Assert.True(result.Any());
+
+
+
+        }
+
+        [Fact]
+        public async Task AddTimer_ShouldReturnNewTimer_WhenCreated()
+        {
+
+
+
+
+        }
+        
 
     }
 }
