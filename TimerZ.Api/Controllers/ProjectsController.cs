@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TimerZ.Api.Extensions;
 using TimerZ.Domain.Models;
-using TimerZ.Repository.Interfaces;
 using TimerZ.TimerTracking.Services.Interfaces;
 
 namespace TimerZ.Api.Controllers

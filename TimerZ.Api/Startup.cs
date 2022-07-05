@@ -11,10 +11,12 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using TimerZ.Api.Mapper;
 using TimerZ.Common;
+using TimerZ.Common.Interfaces.Repositories.Commands;
+using TimerZ.Common.Interfaces.Repositories.Queries;
+using TimerZ.Common.Providers;
 using TimerZ.DAL;
 using TimerZ.Domain.Models;
 using TimerZ.Repository;
-using TimerZ.Repository.Interfaces;
 using TimerZ.TimerTracking.Services;
 using TimerZ.TimerTracking.Services.Interfaces;
 using UserProvider = TimerZ.Api.Providers.UserProvider;
@@ -38,6 +40,8 @@ namespace TimerZ.Api
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAutoMapper(typeof(Startup));
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 services.AddHttpContextAccessor();
@@ -65,18 +69,18 @@ namespace TimerZ.Api
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddTransient<ILabelsWriteRepository, LabelsRepository>();
-            services.AddTransient<ILabelsReadRepository, LabelsRepository>();
-            services.AddTransient<IProjectsWriteRepository, ProjectsRepository>();
-            services.AddTransient<IProjectsReadRepository, ProjectsRepository>();
-            services.AddTransient<ITimerEntryWriteRepository, TimerEntryRepository>();
-            services.AddTransient<ITimerEntryReadRepository, TimerEntryRepository>();
+            services.AddTransient<ILabelsCommandRepository, LabelsRepository>();
+            services.AddTransient<IlabelsQueryRepository, LabelsRepository>();
+            services.AddTransient<IProjectsCommandRepository, ProjectsRepository>();
+            services.AddTransient<IProjectsQueryRepository, ProjectsRepository>();
+            services.AddTransient<ITimerEntriesCommandRepository, TimerEntryRepository>();
+            services.AddTransient<ITimerEntriesQueryRepository, TimerEntryRepository>();
             services.AddTransient<ITimeTrackingService, TimeTrackingService>();
             services.AddTransient<ILabelsService, LabelsService>();
             services.AddTransient<IProjectsService, ProjectsService>();
 
             services.AddTransient<IUserProvider, UserProvider>();
-            services.AddTransient<ITimerEntryMapper, TimerEntryMapper>();
+            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

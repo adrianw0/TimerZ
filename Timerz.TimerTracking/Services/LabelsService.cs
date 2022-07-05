@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TimerZ.Common.Interfaces.Repositories.Commands;
+using TimerZ.Common.Interfaces.Repositories.Queries;
 using TimerZ.Domain.Models;
-using TimerZ.Repository.Interfaces;
 using TimerZ.TimerTracking.Services.Interfaces;
 
 namespace TimerZ.TimerTracking.Services
 {
     public class LabelsService : ILabelsService
     {
-        private readonly ILabelsReadRepository _labelsReadRepo;
-        private readonly ILabelsWriteRepository _labelsWriteRepo;
+        private readonly IlabelsQueryRepository _labelsReadRepo;
+        private readonly ILabelsCommandRepository _labelsWriteRepo;
 
 
 
-        public LabelsService(ILabelsWriteRepository labelsWriteRepo, ILabelsReadRepository labelsReadRepo)
+        public LabelsService(ILabelsCommandRepository labelsWriteRepo, IlabelsQueryRepository labelsReadRepo)
         {
             _labelsWriteRepo = labelsWriteRepo;
             _labelsReadRepo = labelsReadRepo;

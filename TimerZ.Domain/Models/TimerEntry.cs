@@ -20,7 +20,7 @@ namespace TimerZ.Domain.Models
         public TimerEntry()
         {
             this.State = TimerState.New;
-            this.Id = 0;
+            //this.Id = 0;
             Labels = new HashSet<Label>();
         }
     }

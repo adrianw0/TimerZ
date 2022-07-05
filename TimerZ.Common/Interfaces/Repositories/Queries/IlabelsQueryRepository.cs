@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using TimerZ.Domain.Models;
 
-namespace TimerZ.Repository.Interfaces
+namespace TimerZ.Common.Interfaces.Repositories.Queries
 {
-    public interface ILabelsReadRepository
+    public interface IlabelsQueryRepository
     {
         Task<IEnumerable<Label>> GetAllLabels();
         Task<Label> GetLabel(string name);

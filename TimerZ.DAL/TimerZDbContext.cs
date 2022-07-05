@@ -28,11 +28,6 @@ namespace TimerZ.DAL
             modelBuilder.ApplyConfiguration(new LabelEntityConfiguration());
             modelBuilder.ApplyConfiguration(new ProjectEntityConfiguration());
 
-
-            modelBuilder.Entity<TimerEntry>().Property(x => x.UserId).HasDefaultValue(UserId);
-            modelBuilder.Entity<Project>().Property(x => x.UserId).HasDefaultValue(UserId);
-            modelBuilder.Entity<Label>().Property(x => x.UserId).HasDefaultValue(UserId);
-
             modelBuilder.Entity<TimerEntry>().HasQueryFilter(e => e.UserId == UserId);
             modelBuilder.Entity<Label>().HasQueryFilter(l => l.UserId == UserId);
             modelBuilder.Entity<Project>().HasQueryFilter(p => p.UserId == UserId);

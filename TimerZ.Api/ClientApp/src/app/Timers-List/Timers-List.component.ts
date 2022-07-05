@@ -88,6 +88,8 @@ export class TimersListComponent implements OnInit, AfterViewInit {
         this.ini = result.filter(e => e.state === TimerState.Finished);
 
         this.buildDataSource();
+
+        console.log(this.ini)
       },
       (error) => console.log(error)
     );
@@ -101,7 +103,7 @@ export class TimersListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.Data = new MatTableDataSource<TimerEntry>();
-
+    this.ini =[]
     this.refreshData();
   }
   ngAfterViewInit() {

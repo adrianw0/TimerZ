@@ -32,15 +32,8 @@
     </ng-container>
 
     <ng-container matColumnDef="elapsed">
-      <mat-cell  class="col-center" *matCellDef="let entry"
-        >{{
-          ("0" + Math.floor((this.entry.elapsed / 1000) / 3600)).slice(-2)+
-          ":" +
-          ("0" + Math.floor((this.entry.elapsed / 1000) / 60)).slice(-2) +
-          ":" +
-          ("0" + Math.floor(this.entry.elapsed / 1000)).slice(-2)
-        }}
-
+      <mat-cell class="col-center" *matCellDef="let entry">
+        {{("0" + Math.floor((this.entry.elapsed / 1000) / 3600)).slice(-2)+":" + ("0" + Math.floor((this.entry.elapsed / 1000) / 60)).slice(-2) +":" +("0" + Math.floor(this.entry.elapsed / 1000)).slice(-2)}}
 
       </mat-cell>
     </ng-container>

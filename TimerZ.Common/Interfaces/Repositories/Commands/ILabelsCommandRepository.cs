@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using TimerZ.Domain.Models;
 
-namespace TimerZ.Repository.Interfaces
+namespace TimerZ.Common.Interfaces.Repositories.Commands
 {
-    public interface ILabelsWriteRepository
+    public interface ILabelsCommandRepository
     {
         Task AddNewLabel(Label label);
         Task DeleteLabel(int id);

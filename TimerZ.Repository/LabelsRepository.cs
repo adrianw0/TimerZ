@@ -2,13 +2,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using TimerZ.Common.Interfaces.Repositories.Commands;
+using TimerZ.Common.Interfaces.Repositories.Queries;
 using TimerZ.DAL;
 using TimerZ.Domain.Models;
-using TimerZ.Repository.Interfaces;
+
 
 namespace TimerZ.Repository
 {
-    public class LabelsRepository : ILabelsReadRepository, ILabelsWriteRepository
+    public class LabelsRepository : IlabelsQueryRepository, ILabelsCommandRepository
     {
         private readonly TimerZDbContext _context;
 

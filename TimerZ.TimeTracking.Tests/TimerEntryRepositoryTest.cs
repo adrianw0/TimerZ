@@ -34,8 +34,10 @@ namespace TimerZ.TimeTracking.Tests
                 var result = await _sut.GetRunning(true);
 
                 //Assert
+
                 Assert.Equal(running.EndDate, result.EndDate);
                 Assert.Equal(running.State, result.State);
+                Assert.Equal(TimerState.Running, result.State );
             }
         }
 

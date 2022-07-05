@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TimerZ.Common.Interfaces.Repositories.Commands;
+using TimerZ.Common.Interfaces.Repositories.Queries;
 using TimerZ.Domain.Models;
-using TimerZ.Repository.Interfaces;
+
 using TimerZ.TimerTracking.Services.Interfaces;
 
 namespace TimerZ.TimerTracking.Services
 {
     public class ProjectsService : IProjectsService
     {
-        private readonly IProjectsReadRepository _projectsReadRepo;
-        private readonly IProjectsWriteRepository _projectWriteRepo;
+        private readonly IProjectsQueryRepository _projectsReadRepo;
+        private readonly IProjectsCommandRepository _projectWriteRepo;
 
-        public ProjectsService(IProjectsWriteRepository projectWriteRepo, IProjectsReadRepository projectsReadRepo)
+        public ProjectsService(IProjectsCommandRepository projectWriteRepo, IProjectsQueryRepository projectsReadRepo)
         {
             _projectWriteRepo = projectWriteRepo;
             _projectsReadRepo = projectsReadRepo;

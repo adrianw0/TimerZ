@@ -12,7 +12,7 @@ namespace TimerZ.DAL
         public TimerZDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<TimerZDbContext>();
-            optionsBuilder.UseSqlServer("Server=.;Database=TimersDb;User Id=admin;Password=admin"); //this is awful
+            optionsBuilder.UseSqlServer("Server=.;Database=TimersDb;User Id=sa;Password=admin"); //I'm sorry :|
 
             return new TimerZDbContext(optionsBuilder.Options, new OperationalStoreOptionsMigrations(), new UserProvider());
         }

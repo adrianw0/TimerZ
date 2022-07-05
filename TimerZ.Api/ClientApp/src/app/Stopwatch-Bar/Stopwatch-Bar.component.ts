@@ -44,7 +44,7 @@ export class StopwatchBarComponent implements OnInit, AfterContentInit {
 
 
   onDescriptionChanged(event: any) {
-    if (this.descriptionChanged.observers.length === 0) {
+    if (this.descriptionChanged.observers.length === 0 && this.entry.state == TimerState.Running) {
         this.descriptionChanged.pipe(debounceTime(3000), distinctUntilChanged())
             .subscribe(term => {
                 this.sendData();
@@ -167,7 +167,9 @@ export class StopwatchBarComponent implements OnInit, AfterContentInit {
     event.input!.value = "";
 
     this.labelCtrl.setValue(null);
-    this.sendData();
+    if (this.entry.state == TimerState.Running) {
+      this.sendData();
+    }
   }
 
   remove(label: Label): void {
@@ -176,7 +178,9 @@ export class StopwatchBarComponent implements OnInit, AfterContentInit {
     if (index >= 0) {
       this.entry.labels.splice(index, 1);
     }
-    this.sendData();
+    if (this.entry.state == TimerState.Running) {
+      this.sendData();
+    }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -192,7 +196,9 @@ export class StopwatchBarComponent implements OnInit, AfterContentInit {
 
     this.labelInput.nativeElement.value = "";
     this.labelCtrl.setValue(null);
-    this.sendData();
+    if (this.entry.state == TimerState.Running) {
+      this.sendData();
+    }
   }
 
   private _filter(value: string): Label[] {

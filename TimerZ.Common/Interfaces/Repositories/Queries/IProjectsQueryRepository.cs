@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using TimerZ.Domain.Models;
 
-namespace TimerZ.Repository.Interfaces
+namespace TimerZ.Common.Interfaces.Repositories.Queries
 {
-    public interface IProjectsReadRepository
+    public interface IProjectsQueryRepository
     {
         Task<IEnumerable<Project>> GetAllProjects();
         Task<Project> GetProject(string name);

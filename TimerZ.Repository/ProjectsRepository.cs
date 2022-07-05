@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TimerZ.DAL;
 using TimerZ.Domain.Models;
-using TimerZ.Repository.Interfaces;
+using TimerZ.Common.Interfaces.Repositories.Commands;
+using TimerZ.Common.Interfaces.Repositories.Queries;
 
 namespace TimerZ.Repository
 {
-    public class ProjectsRepository : IProjectsWriteRepository, IProjectsReadRepository
+    public class ProjectsRepository : IProjectsCommandRepository, IProjectsQueryRepository
     {
         private readonly TimerZDbContext _context;
 
